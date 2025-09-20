@@ -1,5 +1,7 @@
 import sqlite3
+import os
 
+os.makedirs('data', exist_ok=True)
 
 connection = sqlite3.connect('data/livraria.db')
 cursor = connection.cursor()
