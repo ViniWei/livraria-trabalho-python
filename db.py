@@ -27,8 +27,9 @@ def create_book(title, author, publication_year, price):
 
 
 def return_all_books():
-    return cursor.execute("SELECT * FROM books")
+    return cursor.execute('SELECT * FROM books')
 
 
-def update_book_price():
-    cursor.execute()
+def update_book_price(id, price):
+    cursor.execute('UPDATE books SET price = ? WHERE id = ?', [price, id])
+    connection.commit()
