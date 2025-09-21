@@ -1,7 +1,9 @@
 import sqlite3
 import os
+import datetime
 
 os.makedirs('data', exist_ok=True)
+os.makedirs('backups', exist_ok=True)
 
 connection = sqlite3.connect('data/livraria.db')
 cursor = connection.cursor()
@@ -55,3 +57,16 @@ def get_all_authors():
 
 def get_all_books_by_author(author):
     return cursor.execute('SELECT * FROM books WHERE author = ?', [author])
+
+
+def backup():
+    backup_file_name = f'backup_{datetime.datetime.now()}.db'
+    backup_file_name = backup_file_name.replace(' ', '_')
+
+    backup_connection = sqlite3.connect(f'backups/{backup_file_name}')
+    with backup_connection:
+        connection.backup(backup_connection)
+
+
+def clear_old_backups():
+    pass

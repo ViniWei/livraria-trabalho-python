@@ -38,7 +38,7 @@ def menu():
         case 7:
             print('Teste')
         case 8:
-            print('Teste')
+            db.backup()
         case 9:
             print('Saindo')
         case _:
