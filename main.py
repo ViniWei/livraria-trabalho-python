@@ -30,7 +30,7 @@ def menu():
         case 3:
             update_book_price()
         case 4:
-            print('Teste')
+            delete_book()
         case 5:
             print('Teste')
         case 6:
@@ -45,10 +45,6 @@ def menu():
             print('Opção invalida')
 
 
-def print_book_simple(row):
-    print(f'({row[0]}) {row[1]}')
-
-
 def print_book(row):
     print('Id:', row[0])
     print('Titulo:', row[1])
@@ -56,6 +52,13 @@ def print_book(row):
     print('Ano de publicação:', row[3])
     print('Preço', row[4])
     print('=============')
+
+
+def print_book_choice():
+    res = db.return_all_books()
+    print('Selecione o livro pelo id.')
+    for row in res:
+        print(f'- ({row[0]}) {row[1]}')
 
 
 def create_new_book():
@@ -66,11 +69,14 @@ def create_new_book():
     db.create_book(title, author, publication_year, price)
 
 
+def delete_book():
+    print_book_choice()
+    book_id = input('Id: ')
+    db.remove_book(book_id)
+
+
 def update_book_price():
-    res = db.return_all_books()
-    print('Selecione o livro pelo id')
-    for row in res:
-        print_book_simple(row)
+    print_book_choice()
     book_id = input('Id: ')
     book_price = float(input('Price: '))
     db.update_book_price(book_id, book_price)

@@ -33,3 +33,8 @@ def return_all_books():
 def update_book_price(id, price):
     cursor.execute('UPDATE books SET price = ? WHERE id = ?', [price, id])
     connection.commit()
+
+
+def remove_book(id):
+    cursor.execute('DELETE FROM books WHERE id = ?', [id])
+    connection.commit()
