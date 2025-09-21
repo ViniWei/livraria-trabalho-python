@@ -38,3 +38,20 @@ def update_book_price(id, price):
 def remove_book(id):
     cursor.execute('DELETE FROM books WHERE id = ?', [id])
     connection.commit()
+
+
+def get_all_authors():
+    books = cursor.execute('SELECT * FROM books')
+
+    authors = []
+    for row in books:
+        author = row[2]
+        if author in authors:
+            continue
+        authors.append(author)
+
+    return authors
+
+
+def get_all_books_by_author(author):
+    return cursor.execute('SELECT * FROM books WHERE author = ?', [author])

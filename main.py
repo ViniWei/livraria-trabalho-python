@@ -32,7 +32,7 @@ def menu():
         case 4:
             delete_book()
         case 5:
-            print('Teste')
+            search_books_by_author()
         case 6:
             print('Teste')
         case 7:
@@ -80,6 +80,17 @@ def update_book_price():
     book_id = input('Id: ')
     book_price = float(input('Price: '))
     db.update_book_price(book_id, book_price)
+
+
+def search_books_by_author():
+    authors = db.get_all_authors()
+    for index, author in enumerate(authors):
+        print(f'- ({index + 1}) {author}')
+    authorIndex = int(input('Choose your author:'))
+    books = db.get_all_books_by_author(authors[authorIndex - 1])
+    print('=============')
+    for row in books:
+        print_book(row)
 
 
 while option != 9:
