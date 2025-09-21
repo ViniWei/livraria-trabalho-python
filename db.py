@@ -2,8 +2,10 @@ import sqlite3
 import os
 import datetime
 
+backup_folder = 'backups'
+
 os.makedirs('data', exist_ok=True)
-os.makedirs('backups', exist_ok=True)
+os.makedirs(backup_folder, exist_ok=True)
 
 connection = sqlite3.connect('data/livraria.db')
 cursor = connection.cursor()
@@ -63,10 +65,23 @@ def backup():
     backup_file_name = f'backup_{datetime.datetime.now()}.db'
     backup_file_name = backup_file_name.replace(' ', '_')
 
-    backup_connection = sqlite3.connect(f'backups/{backup_file_name}')
+    backup_connection = sqlite3.connect(f'{backup_folder}/{backup_file_name}')
     with backup_connection:
         connection.backup(backup_connection)
 
+    clear_old_backups()
+
 
 def clear_old_backups():
-    pass
+    max_number_of_backups = 5
+    files = os.listdir(backup_folder)
+
+    if len(files) <= max_number_of_backups:
+        return
+
+    files.sort(key=lambda x: os.path.getmtime(f'{backup_folder}/{x}'))
+
+    files_to_delete = files[:-max_number_of_backups]
+    for file in files_to_delete:
+        os.remove(f'{backup_folder}/{file}')
+        print(f"Deleted old backup: {file}")
