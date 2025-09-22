@@ -28,6 +28,7 @@ def create_book(title, author, publication_year, price):
                    VALUES(?, ?, ?, ?)''', data)
 
     connection.commit()
+    backup()
 
 
 def return_all_books():
@@ -37,11 +38,13 @@ def return_all_books():
 def update_book_price(id, price):
     cursor.execute('UPDATE books SET price = ? WHERE id = ?', [price, id])
     connection.commit()
+    backup()
 
 
 def remove_book(id):
     cursor.execute('DELETE FROM books WHERE id = ?', [id])
     connection.commit()
+    backup()
 
 
 def get_all_authors():
@@ -84,4 +87,3 @@ def clear_old_backups():
     files_to_delete = files[:-max_number_of_backups]
     for file in files_to_delete:
         os.remove(f'{backup_folder}/{file}')
-        print(f"Deleted old backup: {file}")
