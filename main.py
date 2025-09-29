@@ -37,7 +37,7 @@ def menu():
         case 6:
             export_books_to_csv()
         case 7:
-            print('Teste')
+            import_books_to_csv()
         case 8:
             db.backup()
         case 9:
@@ -97,6 +97,11 @@ def search_books_by_author():
 def export_books_to_csv():
     books = db.return_all_books()
     csv_service.export(books)
+
+
+def import_books_to_csv():
+    file_path = input('Caminho até o arquivo:')
+    csv_service.importt(file_path)
 
 
 while option != 9:
