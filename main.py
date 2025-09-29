@@ -1,4 +1,5 @@
 import db
+import csv_service
 
 menu_ui = '''
 1. Adicionar novo livro
@@ -34,7 +35,7 @@ def menu():
         case 5:
             search_books_by_author()
         case 6:
-            print('Teste')
+            export_books_to_csv()
         case 7:
             print('Teste')
         case 8:
@@ -91,6 +92,11 @@ def search_books_by_author():
     print('=============')
     for row in books:
         print_book(row)
+
+
+def export_books_to_csv():
+    books = db.return_all_books()
+    csv_service.export(books)
 
 
 while option != 9:
